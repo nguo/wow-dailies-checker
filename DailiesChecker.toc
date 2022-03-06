@@ -1,0 +1,8 @@
+## Interface: 20503
+## Title: Dailies Checker
+## Author: xgooy
+## Version: 0.0.1
+## Notes: Displays statuses about the current toon's dailies.
+
+config.lua
+main.lua
