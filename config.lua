@@ -17,13 +17,13 @@ Dailies.colors = {
 Dailies.db = {
     dungeons = {
         name = "Normal Dungeon",
-        quests = { 11389, 11371, 11376, 11383, 11364, 11500, 11385, 11387 },
+        quests = { 11389, 11371, 11376, 11383, 11364, 11500, 11385, 11387, 11500 },
         max = 1,
         subtype = "dungeons"
     },
     heroics = {
         name = "Heroic Dungeon",
-        quests = { 11369, 11384, 11382, 11363, 11362, 11375, 11354, 11386, 11373, 11378, 11374, 11372, 11368, 11388, 11370 },
+        quests = { 11369, 11384, 11382, 11363, 11362, 11375, 11354, 11386, 11373, 11378, 11374, 11372, 11368, 11388, 11370, 11499 },
         max = 1,
         subtype = "dungeons"
     },
@@ -47,9 +47,12 @@ Dailies.db = {
     },
     sso = {
         name = "Shattered Sun Offensive",
-        quests = {  },
+        quests = {
+            11875, 11523, 11536, 11525, 11547, 11533, 11537, 11544, 11877, 11514, 11515, 11516, 11880,
+            11542, 11539
+        },
         max = -1,
-        subtype = "shattsun"
+        subtype = "sso"
     },
     pvpbg = {
         name = "PvP Battlegrounds",

@@ -77,7 +77,12 @@ end
 
 local function printQuestsForState(questIds, state)
   for _,qid in pairs(questIds) do
-    printQuestLine(C_QuestLog.GetQuestInfo(qid), state)
+    local name = C_QuestLog.GetQuestInfo(qid)
+    if not name then
+      print("[warn] missing quest "..qid)
+    else
+      printQuestLine(C_QuestLog.GetQuestInfo(qid), state)
+    end
   end
 end
 
@@ -167,11 +172,10 @@ end
 --[[
 SLASH COMMAND
 --]]
-print("hooking up slash command")
 SLASH_DAILYCHECK1 = "/dcheck"
 SLASH_DAILYCHECK2 = "/dch"
 local DEFAULT_COMMAND = "dl"
-local AVAIL_CATEGORIES = { "dungeons", "professions", "skettis", "ogrila", "netherwing", "shattsun", "pvp" }
+local AVAIL_CATEGORIES = { "dungeons", "professions", "skettis", "ogrila", "netherwing", "sso", "pvp" }
 function SlashCmdList.DAILYCHECK(msg, editbox)
   local msgParts = {}
   for part in string.gmatch(msg, "[^%s]+") do
