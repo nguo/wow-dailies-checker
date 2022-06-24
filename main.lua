@@ -6,6 +6,7 @@ local DONE_LIST_TYPE = "done"
 local DONE_AND_QUEST_LOG_LIST_TYPE = "doneactive"
 local QUEST_LOG_LIST_TYPE = "active"
 local MISSING_LIST_TYPE = "missing"
+local TODO_LIST_TYPE = "todo"
 local ALL_LIST_TYPE = "all"
 local QUEST_STATES = {
   done = { shorthand = "(t)", descriptor = "turned-in", color = addon.colors.done_state },
@@ -65,6 +66,9 @@ local function getStateChecks(listType)
     checkCompleted = true
     checkAccepted = true
   end
+  if listType == TODO_LIST_TYPE then
+    checkAccepted = true
+  end
   if listType == ALL_LIST_TYPE or listType == MISSING_LIST_TYPE then
     checkMissing = true
   end
@@ -90,15 +94,17 @@ end
 local function printStatus(listType, categorySubtype)
   local beginMsg = "Today's progress for "
   if listType == DONE_LIST_TYPE then
-    beginMsg = beginMsg.."turned-in / quest log completed"
+    beginMsg = beginMsg.."turned-in // quest log completed"
   elseif listType == DONE_AND_QUEST_LOG_LIST_TYPE then
-    beginMsg = beginMsg.."turned-in / quest log completed / quest log accepted"
+    beginMsg = beginMsg.."turned-in // quest log completed // quest log accepted"
   elseif listType == QUEST_LOG_LIST_TYPE then
-    beginMsg = beginMsg.."quest log completed / quest log accepted"
+    beginMsg = beginMsg.."quest log completed // quest log accepted"
+  elseif listType == TODO_LIST_TYPE then
+    beginMsg = beginMsg.."quest log accepted"
   elseif listType == MISSING_LIST_TYPE then
     beginMsg = beginMsg.."missing"
   elseif listType == ALL_LIST_TYPE then
-    beginMsg = beginMsg.."turned-in / quest log completed / quest log accepted / missing"
+    beginMsg = beginMsg.."turned-in // quest log completed // quest log accepted // missing"
   end
   print(colorize(addon.name..": "..beginMsg, addon.colors.main))
   if categorySubtype then
@@ -200,6 +206,8 @@ function SlashCmdList.DAILYCHECK(msg, editbox)
     printStatus(DONE_LIST_TYPE, subCommand)
   elseif primaryCommand == "a" then
     printStatus(ALL_LIST_TYPE, subCommand)
+  elseif primaryCommand == "t" then
+    printStatus(TODO_LIST_TYPE, subCommand)
   elseif primaryCommand == "dl" then
     printStatus(DONE_AND_QUEST_LOG_LIST_TYPE, subCommand)
   elseif primaryCommand == "ql" then
@@ -209,9 +217,10 @@ function SlashCmdList.DAILYCHECK(msg, editbox)
   else
     print(colorize(addon.name..":", addon.colors.main).." Options for command "..colorize(SLASH_DAILYCHECK1, addon.colors.args).." or "..colorize(SLASH_DAILYCHECK2, addon.colors.args))
     print("  "..colorize("(category)", addon.colors.args).." - by default, uses the 'dl' option")
-    print("  "..colorize("(category) d", addon.colors.args).." - shows done list: turned-in / completed but not turned-in")
-    print("  "..colorize("(category) ql", addon.colors.args).." - shows quest log list: completed but not turned-in / accepted")
-    print("  "..colorize("(category) dl", addon.colors.args).." - shows done & quest log list: turned-in / completed but not turned-in / accepted")
+    print("  "..colorize("(category) d", addon.colors.args).." - shows done list: turned-in // completed but not turned-in")
+    print("  "..colorize("(category) t", addon.colors.args).." - show to-do list: accepted but not completed")
+    print("  "..colorize("(category) ql", addon.colors.args).." - shows quest log list: completed but not turned-in // accepted")
+    print("  "..colorize("(category) dl", addon.colors.args).." - shows done & quest log list: turned-in / completed but not turned-in // accepted")
     print("  "..colorize("(category) m", addon.colors.args).." - shows missing list: dailies that have not been taken")
     print("  "..colorize("(category) a", addon.colors.args).." - shows all the dailies")
     local questStateDescs = {}
