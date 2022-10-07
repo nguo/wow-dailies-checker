@@ -181,7 +181,9 @@ SLASH COMMAND
 SLASH_DAILYCHECK1 = "/dcheck"
 SLASH_DAILYCHECK2 = "/dch"
 local DEFAULT_COMMAND = "dl"
-local AVAIL_CATEGORIES = { "dungeons", "professions", "skettis", "ogrila", "netherwing", "sso", "pvp" }
+local AVAIL_CATEGORIES = { "tbcdungeons", "tbcprof", "skettis", "ogrila", "netherwing", "sso",
+  "pvp", "hodir", "ebon", "wotlkdungeons", "wotlkprof", "oracles",
+  "frenzyheart", "warsong", "kaluak", "wyrmrest" }
 function SlashCmdList.DAILYCHECK(msg, editbox)
   local msgParts = {}
   for part in string.gmatch(msg, "[^%s]+") do
